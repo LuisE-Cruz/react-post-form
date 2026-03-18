@@ -1,4 +1,5 @@
 import { useState } from "react"
+import axios from "axios"
 
 export default function MainContent() {
 
@@ -6,19 +7,29 @@ export default function MainContent() {
         author: "",
         title: "",
         body: "",
-        switchCheckDefault: false
+        public: false
     })
 
-    function handleSubmit(e) {
-        e.preventDefault()
+    async function handleSubmit(e) {
+        e.preventDefault();
+
+        try {
+
+            const response = await axios.post('https://67c5b4f3351c081993fb1ab6.mockapi.io/api/posts', formData);
+            console.log('Dati inviati', response.data);
+
+        } catch (error) {
+
+            console.error("Ritenta", error);
+
+        }
     }
 
     function handleDataForm(e) {
         const dataValue = e.target.type === 'checkbox' ? e.target.checked : e.target.value
         setFormData({ ...formData, [e.target.name]: dataValue })
-        console.log(formData)
     }
-
+    console.log(formData)
     return (
 
         <>
@@ -38,12 +49,12 @@ export default function MainContent() {
                     </div>
                     <div className="col-12">
                         <div className="form-check form-switch">
-                            <input className="form-check-input" type="checkbox" role="switch" id="switchCheckDefault" name="switchCheckDefault" onChange={handleDataForm} checked={formData.switchCheckDefault} />
+                            <input className="form-check-input" type="checkbox" role="switch" id="switchCheckDefault" name="public" onChange={handleDataForm} checked={formData.public} />
                             <label className="form-check-label text-danger" htmlFor="switchCheckDefault"><strong>Public your vlog</strong></label>
                         </div>
                     </div>
                     <div className="col-12">
-                        <button type="button" className="btn btn-danger my-3"><strong>Submit</strong></button>
+                        <button type="submit" className="btn btn-danger my-3"><strong>Submit</strong></button>
                     </div>
                 </form>
             </div>
