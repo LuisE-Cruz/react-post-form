@@ -14,14 +14,18 @@ export default function MainContent() {
         e.preventDefault();
 
         try {
-
             const response = await axios.post('https://67c5b4f3351c081993fb1ab6.mockapi.io/api/posts', formData);
             console.log('Dati inviati', response.data);
 
+            setFormData({
+                author: "",
+                title: "",
+                body: "",
+                public: false
+            });
+
         } catch (error) {
-
             console.error("Ritenta", error);
-
         }
     }
 
@@ -29,7 +33,7 @@ export default function MainContent() {
         const dataValue = e.target.type === 'checkbox' ? e.target.checked : e.target.value
         setFormData({ ...formData, [e.target.name]: dataValue })
     }
-    console.log(formData)
+
     return (
 
         <>
