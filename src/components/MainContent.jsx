@@ -10,12 +10,21 @@ export default function MainContent() {
         public: false
     })
 
+    function handleDataForm(e) {
+
+        // const dataValue = e.target.type === 'checkbox' ? e.target.checked : e.target.value
+
+        setFormData({ ...formData, [e.target.name]: e.target.checked || e.target.value })
+    }
+
     async function handleSubmit(e) {
         e.preventDefault();
 
         try {
-            const response = await axios.post('https://67c5b4f3351c081993fb1ab6.mockapi.io/api/posts', formData);
-            console.log('Dati inviati', response.data);
+
+            console.log('Dati inviati', (await axios.post('https://67c5b4f3351c081993fb1ab6.mockapi.io/api/posts', formData)).data);
+
+            alert('The data was sent to the server')
 
             setFormData({
                 author: "",
@@ -29,10 +38,6 @@ export default function MainContent() {
         }
     }
 
-    function handleDataForm(e) {
-        const dataValue = e.target.type === 'checkbox' ? e.target.checked : e.target.value
-        setFormData({ ...formData, [e.target.name]: dataValue })
-    }
 
     return (
 
